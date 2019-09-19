@@ -48,3 +48,4 @@ p1176_m = aggregate(p1176_z, as.yearmon, sum)
 p1232_m = aggregate(p1232_z, as.yearmon, sum)
 pjunco_m = aggregate(pjunco_z, as.yearmon, sum )
 pINIA_m = aggregate(pINIA_z, as.yearmon, sum)
+
