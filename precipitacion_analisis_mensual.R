@@ -17,20 +17,29 @@ p1232$Fecha = as.Date(p1232$Fecha,"%Y-%m-%d")
 
 #                 estacion Junco
 pjunco = read.csv("./Datos/clima.csv")
-pjunco$ï..FECHA = as.Date(pjunco$ï..FECHA, "%m/%d/%Y")
+#pjunco$ï..FECHA = as.Date(pjunco$ï..FECHA, "%m/%d/%Y")
+# se debe evitar el uso de caracteres raros porque genera problemas cuando el codigo se lee con otras funciones
+colnames(pjunco)[1] = "Fecha"
+pjunco$Fecha = as.Date(pjunco$Fecha, "%m/%d/%Y")
 
 #                 estacion INIA
 pINIA = read.table("./Datos/lluvia_INIA.txt",sep="\t", header=T)
 pINIA$Fecha = as.Date(pINIA$Fecha,"%d/%m/%Y")
 
 
+head(p1257)
+head(p1176)
+head(p1232)
+head(pjunco)
+head(pINIA)
 
 ################conver zoo#################################
 
 p1257_z = zoo(p1257$Precip, p1257$Fecha)
 p1176_z = zoo(p1176$Precip, p1176$Fecha)
 p1232_z = zoo(p1232$Precip, p1232$Fecha)
-pjunco_z = zoo(pjunco$mm, pjunco$ï..FECHA)
+#pjunco_z = zoo(pjunco$mm, pjunco$ï..FECHA)
+pjunco_z = zoo(pjunco$mm, pjunco$Fecha)
 pINIA_z = zoo(pINIA$PrecAcum, pINIA$Fecha)
 
 
