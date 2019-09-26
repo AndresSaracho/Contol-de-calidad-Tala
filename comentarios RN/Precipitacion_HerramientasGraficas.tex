@@ -1,0 +1,339 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Algunos herramientas gráficas para verificar la precipitación},
+            pdfauthor={Rafael Navas},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Algunos herramientas gráficas para verificar la precipitación}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Rafael Navas}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{26/9/2019}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduccion}{%
+\section{Introducción}\label{introduccion}}
+
+Este documento muestra algunas herrameintas gráficas en R para verificar
+los datos de precipitación. Trabaja con el script creado por Andres
+``precipitacion\_analisis\_mensual.R'' localizado en la carpeta raiz del
+proyecto
+(\url{https://github.com/AndresSaracho/Contol-de-calidad-Tala}).
+
+\hypertarget{ploteo-de-estaciones}{%
+\section{Ploteo de estaciones}\label{ploteo-de-estaciones}}
+
+Esta sección muestra como plotear las estaciones desde R. Primero
+cargamos las librerias y los shapefiles. Las variables utm es el sistema
+de referencia (UTM 21S).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(maptools)}
+\NormalTok{utm =}\StringTok{ }\KeywordTok{CRS}\NormalTok{(}\StringTok{"+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs"}\NormalTok{)}
+\NormalTok{pluvio_shp =}\StringTok{ }\KeywordTok{readShapePoints}\NormalTok{(}\StringTok{"./Datos/Estaciones.shp"}\NormalTok{, }\DataTypeTok{proj4string=}\NormalTok{utm)}
+\NormalTok{pluvio_shp}\OperatorTok{$}\NormalTok{Numero[}\DecValTok{9}\OperatorTok{:}\DecValTok{10}\NormalTok{] =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"INIA"}\NormalTok{, }\StringTok{"Junco"}\NormalTok{)}
+\NormalTok{basin_shp =}\StringTok{ }\KeywordTok{readShapePoly}\NormalTok{(}\StringTok{"./Datos/Tala.shp"}\NormalTok{, }\DataTypeTok{force_ring =}\NormalTok{ T, }\DataTypeTok{proj4string=}\NormalTok{utm)}
+\end{Highlighting}
+\end{Shaded}
+
+Ahora podemos plotear de la siguiente manera
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(pluvio_shp,}\DataTypeTok{axes=}\NormalTok{T)}
+\KeywordTok{plot}\NormalTok{(basin_shp,}\DataTypeTok{add=}\NormalTok{T)}
+\KeywordTok{text}\NormalTok{(}\KeywordTok{coordinates}\NormalTok{(pluvio_shp)[}\OperatorTok{-}\DecValTok{8}\NormalTok{,], pluvio_shp}\OperatorTok{$}\NormalTok{Numero[}\OperatorTok{-}\DecValTok{8}\NormalTok{], }\DataTypeTok{pos=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(}\KeywordTok{coordinates}\NormalTok{(pluvio_shp)[}\DecValTok{8}\NormalTok{,}\DecValTok{1}\NormalTok{],}\KeywordTok{coordinates}\NormalTok{(pluvio_shp)[}\DecValTok{8}\NormalTok{,}\DecValTok{2}\NormalTok{],}
+\NormalTok{     pluvio_shp}\OperatorTok{$}\NormalTok{Numero[}\DecValTok{8}\NormalTok{], }\DataTypeTok{pos=}\DecValTok{4}\NormalTok{, }\DataTypeTok{col=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Precipitacion_HerramientasGraficas_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Vemos que la estación 1257 esta en dos sitios. Probablemente fue movida
+y los registros pueden o no solaparse.
+
+También podemos cambiar de sistema de coordenadas con la funcion
+spTransform() y definiendo nuevos sistemas de coordenadas.
+
+Por ejemplo en kilometros:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{utkm =}\StringTok{ }\KeywordTok{CRS}\NormalTok{(}\StringTok{"+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=km +no_defs"}\NormalTok{)}
+\NormalTok{pluvio_shp_km =}\StringTok{ }\KeywordTok{spTransform}\NormalTok{(pluvio_shp, utkm)}
+\NormalTok{basin_shp_km =}\StringTok{ }\KeywordTok{spTransform}\NormalTok{(basin_shp, utkm)}
+\KeywordTok{plot}\NormalTok{(pluvio_shp_km,}\DataTypeTok{axes=}\NormalTok{T, }\DataTypeTok{xlab=}\StringTok{"Long (UTM 21S, km)"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Lat (UTM 21S, km)"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(basin_shp_km,}\DataTypeTok{add=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Precipitacion_HerramientasGraficas_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+otra alternativa en wgs84 en grados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dec =}\StringTok{ }\KeywordTok{CRS}\NormalTok{(}\StringTok{"+init=epsg:4326"}\NormalTok{)}
+\NormalTok{pluvio_shp_dec =}\StringTok{ }\KeywordTok{spTransform}\NormalTok{(pluvio_shp, dec)}
+\NormalTok{basin_shp_dec =}\StringTok{ }\KeywordTok{spTransform}\NormalTok{(basin_shp, dec)}
+\KeywordTok{plot}\NormalTok{(pluvio_shp_dec,}\DataTypeTok{axes=}\NormalTok{T, }\DataTypeTok{xlab=}\StringTok{"Long (WGS84, º)"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Lat (WGS84, º)"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(basin_shp_dec,}\DataTypeTok{add=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Precipitacion_HerramientasGraficas_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\hypertarget{lectura-de-los-datos-de-precipitacion}{%
+\section{Lectura de los datos de
+precipitación}\label{lectura-de-los-datos-de-precipitacion}}
+
+Los datos de precipitación han sido guardados en la carpeta
+Datos/precipitacion\_diaria.RDS. Han sido calculados con el script
+"precipitacion\_analisis\_menusal.R (version del 26/09/2019). Para leer
+dichos archivos se procede de la siguiente manera:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(zoo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Pdata =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"./Datos/precipitacion_diaria.RDS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Estos datos estan organizados en una matriz zoo de cinco columnas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(Pdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            p1257_z p1176_z p1232_z pINIA_z pjunco_z
+## 2005-12-09       0      NA      NA     7.3      0.2
+## 2005-12-10       0      NA      NA     0.0      0.0
+## 2005-12-11       0      NA      NA     0.0      0.0
+## 2005-12-12       0      NA      NA     0.0     14.0
+## 2005-12-13       0      NA      NA     0.0      0.0
+## 2005-12-14       0      NA      NA     0.0      0.0
+\end{verbatim}
+
+Podemos solicitar un resumen
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(Pdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Index               p1257_z           p1176_z       
+##  Min.   :2005-12-09   Min.   :  0.000   Min.   :  0.000  
+##  1st Qu.:2009-04-13   1st Qu.:  0.000   1st Qu.:  1.000  
+##  Median :2012-08-16   Median :  0.000   Median :  2.000  
+##  Mean   :2012-08-16   Mean   :  4.126   Mean   :  5.965  
+##  3rd Qu.:2015-12-20   3rd Qu.:  2.000   3rd Qu.:  2.000  
+##  Max.   :2019-04-25   Max.   :140.000   Max.   :168.000  
+##                       NA's   :308       NA's   :3242     
+##     p1232_z           pINIA_z           pjunco_z      
+##  Min.   :  0.000   Min.   :  0.000   Min.   :  0.000  
+##  1st Qu.:  2.000   1st Qu.:  0.000   1st Qu.:  0.000  
+##  Median :  2.000   Median :  0.000   Median :  0.000  
+##  Mean   :  8.835   Mean   :  3.816   Mean   :  3.791  
+##  3rd Qu.:  5.000   3rd Qu.:  0.000   3rd Qu.:  0.400  
+##  Max.   :122.000   Max.   :190.800   Max.   :142.000  
+##  NA's   :3134                        NA's   :212
+\end{verbatim}
+
+Vemos que la estación del INIA no tiene datos faltantes. Por otro lado,
+las estaciones 1176 y 1232 tienen mas de ocho años de datos faltantes.
+Para visualizar podemos graficar de la siguiente manera:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(Pdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Precipitacion_HerramientasGraficas_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\hypertarget{curva-de-doble-masa}{%
+\section{Curva de doble masa}\label{curva-de-doble-masa}}
+
+La curva de doble masa compara la precipitacion acumulada de una
+estacion de referencia con otra de la cual tenemos dudas. En este caso
+vamos a comparar la estacion del INIA con la estación 1257.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# La funcion cumsum no puede manejar valores NA, entonces cambiamos valores NA por cero}
+\NormalTok{xcum =}\StringTok{ }\NormalTok{Pdata}\OperatorTok{$}\NormalTok{pINIA_z}
+\NormalTok{ycum =}\StringTok{ }\NormalTok{Pdata}\OperatorTok{$}\NormalTok{p1257_z}
+\NormalTok{xcum[}\KeywordTok{is.na}\NormalTok{(xcum)] =}\StringTok{ }\DecValTok{0}
+\NormalTok{ycum[}\KeywordTok{is.na}\NormalTok{(ycum)] =}\StringTok{ }\DecValTok{0}
+
+\CommentTok{# hacemos la suma}
+\NormalTok{xcum =}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(xcum)}
+\NormalTok{ycum =}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(ycum)}
+\end{Highlighting}
+\end{Shaded}
+
+Para graficar procedemos como sigue:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(xcum, ycum,}
+     \DataTypeTok{xlab=}\StringTok{"Acumulado INIA (mm)"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Acumulado 1257 (mm)"}\NormalTok{, }
+     \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{max}\NormalTok{(xcum,ycum)), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{max}\NormalTok{(xcum,ycum)))}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{a=}\DecValTok{0}\NormalTok{, }\DataTypeTok{b=}\DecValTok{1}\NormalTok{)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{new =}\NormalTok{ T)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{index}\NormalTok{(Pdata), xcum, }\DataTypeTok{type=}\StringTok{"n"}\NormalTok{, }\DataTypeTok{xlab=}\StringTok{""}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{""}\NormalTok{, }\DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{, }\DataTypeTok{yaxt=}\StringTok{"n"}\NormalTok{)}
+\KeywordTok{axis}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DataTypeTok{at=}\KeywordTok{index}\NormalTok{(Pdata), }\DataTypeTok{labels =} \KeywordTok{format}\NormalTok{(}\KeywordTok{index}\NormalTok{(Pdata), }\StringTok{"%Y"}\NormalTok{), }\DataTypeTok{tck=}\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Precipitacion_HerramientasGraficas_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+Los acumulados son similares, no obstante el perido de 2005-2012 la
+estacion de INIA mide mas lluvia que la 1257. La diferencia es
+aproximadamente 15-20\%. De 2012 a 2016 ambas estaciones parecen medir
+igual (la pendiente del periodo es 1). Luego, del periodo 2016 hasta el
+presente la estación 1257 mide mas lluvia que la estacion del INIA.
+
+
+\end{document}

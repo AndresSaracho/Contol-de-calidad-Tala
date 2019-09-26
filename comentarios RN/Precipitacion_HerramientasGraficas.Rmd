@@ -1,0 +1,113 @@
+---
+title: "Algunos herramientas gráficas para verificar la precipitación"
+author: "Rafael Navas"
+date: "26/9/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+knitr::opts_chunk$set(echo = TRUE, fig.pos="ht")
+```
+
+# Introducción
+Este documento muestra algunas herrameintas gráficas en R para verificar los datos de precipitación. Trabaja con el script creado por Andres "precipitacion_analisis_mensual.R" localizado en la carpeta raiz del proyecto (https://github.com/AndresSaracho/Contol-de-calidad-Tala).
+
+# Ploteo de estaciones
+Esta sección muestra como plotear las estaciones desde R. Primero cargamos las librerias y los shapefiles. Las variables utm es el sistema de referencia (UTM 21S). 
+```{r, message=FALSE, warning=FALSE}
+library(maptools)
+utm = CRS("+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
+pluvio_shp = readShapePoints("./Datos/Estaciones.shp", proj4string=utm)
+pluvio_shp$Numero[9:10] = c("INIA", "Junco")
+basin_shp = readShapePoly("./Datos/Tala.shp", force_ring = T, proj4string=utm)
+```
+
+Ahora podemos plotear de la siguiente manera
+```{r}
+plot(pluvio_shp,axes=T)
+plot(basin_shp,add=T)
+text(coordinates(pluvio_shp)[-8,], pluvio_shp$Numero[-8], pos=2)
+text(coordinates(pluvio_shp)[8,1],coordinates(pluvio_shp)[8,2],
+     pluvio_shp$Numero[8], pos=4, col=2)
+```
+
+Vemos que la estación 1257 esta en dos sitios. Probablemente fue movida y los registros pueden o no solaparse.
+
+
+También podemos cambiar de sistema de coordenadas con la funcion spTransform() y definiendo nuevos sistemas de coordenadas.
+
+Por ejemplo en kilometros:
+```{r}
+utkm = CRS("+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=km +no_defs")
+pluvio_shp_km = spTransform(pluvio_shp, utkm)
+basin_shp_km = spTransform(basin_shp, utkm)
+plot(pluvio_shp_km,axes=T, xlab="Long (UTM 21S, km)", ylab="Lat (UTM 21S, km)")
+plot(basin_shp_km,add=T)
+```
+
+otra alternativa en wgs84 en grados:
+```{r}
+dec = CRS("+init=epsg:4326")
+pluvio_shp_dec = spTransform(pluvio_shp, dec)
+basin_shp_dec = spTransform(basin_shp, dec)
+plot(pluvio_shp_dec,axes=T, xlab="Long (WGS84, º)", ylab="Lat (WGS84, º)")
+plot(basin_shp_dec,add=T)
+```
+
+
+
+# Lectura de los datos de precipitación
+Los datos de precipitación han sido guardados en la carpeta Datos/precipitacion_diaria.RDS. Han sido calculados con el script "precipitacion_analisis_menusal.R (version del 26/09/2019). Para leer dichos archivos se procede de la siguiente manera:
+```{r}
+library(zoo)
+Pdata = readRDS("./Datos/precipitacion_diaria.RDS")
+```
+
+Estos datos estan organizados en una matriz zoo de cinco columnas
+```{r}
+head(Pdata)
+```
+
+Podemos solicitar un resumen
+```{r}
+summary(Pdata)
+```
+ Vemos que la estación del INIA no tiene datos faltantes. Por otro lado, las estaciones 1176 y 1232 tienen mas de ocho años de datos faltantes. Para visualizar podemos graficar de la siguiente manera:
+ 
+```{r}
+plot(Pdata)
+```
+ 
+
+# Curva de doble masa
+La curva de doble masa compara la precipitacion acumulada de una estacion de referencia con otra de la cual tenemos dudas. En este caso vamos a comparar la estacion del INIA con la estación 1257.
+
+```{r}
+# La funcion cumsum no puede manejar valores NA, entonces cambiamos valores NA por cero
+xcum = Pdata$pINIA_z
+ycum = Pdata$p1257_z
+xcum[is.na(xcum)] = 0
+ycum[is.na(ycum)] = 0
+
+# hacemos la suma
+xcum = cumsum(xcum)
+ycum = cumsum(ycum)
+
+```
+
+Para graficar procedemos como sigue:
+```{r, fig.width=6, fig.height=6}
+plot(xcum, ycum,
+     xlab="Acumulado INIA (mm)", ylab="Acumulado 1257 (mm)", 
+     xlim=c(0, max(xcum,ycum)), ylim=c(0, max(xcum,ycum)))
+abline(a=0, b=1)
+
+par(new = T)
+plot(index(Pdata), xcum, type="n", xlab="", ylab="", xaxt="n", yaxt="n")
+axis(3, at=index(Pdata), labels = format(index(Pdata), "%Y"), tck=0)
+```
+
+Los acumulados son similares, no obstante el perido de 2005-2012 la estacion de INIA mide mas lluvia que la 1257. La diferencia es aproximadamente 15-20%. De 2012 a 2016 ambas estaciones parecen medir igual (la pendiente del periodo es 1). Luego, del periodo 2016 hasta el presente la estación 1257 mide mas lluvia que la estacion del INIA.
+
+
